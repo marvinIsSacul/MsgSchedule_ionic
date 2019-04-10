@@ -1,0 +1,96 @@
+
+<ion-header>
+  <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon> 
+      </button>
+      
+      <ion-title>Schedule</ion-title>
+
+      <ion-buttons end>
+          <button ion-button icon-only (click)="showPopover($event)">
+            <ion-icon name="more"></ion-icon>
+          </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+
+  <ion-refresher [enabled]="messages && messages.length > 0" (ionRefresh)="refreshMessages($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <h3 ion-text color="dark" *ngIf="!messages || messages.length === 0; else messagesNotEmpty">
+    No messages yet.
+  </h3>
+
+  <ng-template #messagesNotEmpty>
+    <header>
+      <ion-segment [(ngModel)]="currentSegment">
+        <ion-segment-button value="all">
+          All
+        </ion-segment-button>
+        <ion-segment-button value="pending">
+          <ion-icon name="walk"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="sent">
+          <ion-icon name="done-all"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="failed">
+          <ion-icon name="warning"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </header>
+
+    <div [ngSwitch]="currentSegment">
+      <div *ngSwitchCase="'all'">
+        <schedule-list [messages]="messages" display="all"
+         (edit)="editMessage($event)"
+         (pause)="pauseMessage($event)"
+         (resume)="resumeMessage($event)"
+         (press)="pressMessage($event)"
+         (delete)="deleteMessage($event)">
+        </schedule-list>
+      </div>
+
+      <div *ngSwitchCase="'pending'">
+        <schedule-list [messages]="messages" display="pending"
+         (edit)="editMessage($event)"
+         (pause)="pauseMessage($event)"
+         (resume)="resumeMessage($event)"
+         (press)="pressMessage($event)"
+         (delete)="deleteMessage($event)">
+        </schedule-list>
+      </div>
+
+      <div *ngSwitchCase="'sent'">
+        <schedule-list [messages]="messages" display="sent"
+         (edit)="editMessage($event)"
+         (pause)="pauseMessage($event)"
+         (resume)="resumeMessage($event)"
+         (press)="pressMessage($event)"
+         (delete)="deleteMessage($event)">
+        </schedule-list>
+      </div>
+
+      <div *ngSwitchCase="'failed'">
+        <schedule-list [messages]="messages" display="failed"
+         (edit)="editMessage($event)"
+         (pause)="pauseMessage($event)"
+         (resume)="resumeMessage($event)"
+         (press)="pressMessage($event)"
+         (delete)="deleteMessage($event)">
+        </schedule-list>
+      </div>
+      
+    </div>
+  </ng-template>
+
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="createNewMessage()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

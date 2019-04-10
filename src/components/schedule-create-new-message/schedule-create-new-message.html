@@ -1,0 +1,68 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>New Message</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list padding>
+
+    <ion-item>
+      <ion-label>
+        <button ion-button small (tap)="pickContact()">
+          <ion-icon icon-only name="person"></ion-icon>
+        </button>
+      </ion-label>
+      <ion-input type="number" maxlength="15" max="999999999999999" required [(ngModel)]="message.address"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>
+        <ion-icon icon-only name="text"></ion-icon>
+        <span clear item-right ion-text color="default">
+          {{ global.parseInt(message.message.trim().length / 160) + 1 }} / {{ 160 * settings.sms.maxSmsCount - message.message.trim().length }}
+        </span>
+      </ion-label>
+      <ion-input type="text" autocomplete="true" required maxlength="{{160 * settings.sms.maxSmsCount}}" [(ngModel)]="message.message"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+        <ion-label floating><ion-icon icon-only name="time"></ion-icon></ion-label>
+      <ion-datetime required displayFormat="h:mm A" pickerFormat="h mm A"
+      [(ngModel)]="startTime" >
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating><ion-icon icon-only name="calendar"></ion-icon></ion-label>
+      <ion-datetime required displayFormat="D MMMM YYYY"
+      [(ngModel)]="startDate" min="{{ now.toISOString() }}">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      
+      <ion-grid>
+        <ion-row>
+
+          <ion-col col-6>
+              <button ion-button round block default color="color" (click)="onCancel()">
+                <ion-icon icon-only name="close"></ion-icon>
+              </button>
+          </ion-col>
+
+          <ion-col col-6>
+              <button [disabled]="!(startDate && startTime && message.message.trim() && message.address.trim().length >= 10)"
+              ion-button round block default color="secondary" (click)="onCreate()">
+                <ion-icon icon-only name="create"></ion-icon>
+              </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-item>
+
+  </ion-list>
+</ion-content>

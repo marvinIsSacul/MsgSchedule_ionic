@@ -1,0 +1,47 @@
+<ion-list>
+  <h3 *ngIf="getMessages().length === 0">
+    &hellip;
+  </h3>
+
+  <ion-item-sliding *ngFor="let message of getMessages()">
+    <ion-item (press)="emitEvent(pressMessage, message)">
+      <ion-icon item-start name="text">
+      </ion-icon>
+      <h2>{{ message.address }}</h2>
+      <h3>
+        {{ message.time_scheduled | date:'medium' }}
+      </h3>
+      <p>
+        {{ message.message.length >= 45 ? (message.message.slice(0, 45) + '...') : message.message }}
+      </p>
+      <p>
+        <ion-icon class="small-logo" name="{{ message.status == 'sent' ? 'done-all' : message.status == 'pending' ? 'walk' : 'warning' }}">
+        </ion-icon>
+        &nbsp;
+        <ion-icon *ngIf="message.is_paused" class="small-logo" name="pause">
+        </ion-icon>
+      </p>
+    </ion-item>
+
+    <ion-item-options side="left">
+
+      <button ion-button color="default" round (click)="emitEvent(editMessage, message)">
+        <ion-icon name="create"></ion-icon>
+      </button>
+
+      <button *ngIf="message.is_paused" color="secondary" ion-button round (click)="emitEvent(resumeMessage, message)">
+        <ion-icon name="play"></ion-icon>
+      </button>
+
+      <button *ngIf="!(message.is_paused)" ion-button color="dark" round (click)="emitEvent(pauseMessage, message)">
+        <ion-icon name="pause"></ion-icon>
+      </button>
+
+      <button ion-button round color="danger" (click)="emitEvent(deleteMessage, message)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+
+    </ion-item-options>
+  </ion-item-sliding>
+
+</ion-list>

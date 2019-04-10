@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon> 
+      </button>
+      
+      <ion-title>Settings</ion-title>
+
+      <ion-buttons end>
+          <button ion-button icon-only (click)="showPopover($event)">
+            <ion-icon name="more"></ion-icon>
+          </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item-group>
+    <ion-item-divider color="light">App</ion-item-divider>
+    <ion-item>
+      <ion-label>App Notifications</ion-label>
+      <ion-toggle (ngModelChange)="settingsChanged()"
+          [(ngModel)]="settings.system.shouldShowNotifications">
+      </ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Message Sent Notifications</ion-label>
+      <ion-toggle [disabled]="!settings.system.shouldShowNotifications"
+        (ngModelChange)="settingsChanged()"
+        [(ngModel)]="settings.system.shouldShowMessageSentNotifications">
+      </ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Message Failed Notifications</ion-label>
+      <ion-toggle [disabled]="!settings.system.shouldShowNotifications"
+        (ngModelChange)="settingsChanged()"
+        [(ngModel)]="settings.system.shouldShowMessageFailedNotifications">
+      </ion-toggle>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">SMS</ion-item-divider>
+    <ion-item>
+      <ion-label>
+        Max SMS Count Per Message:
+        <b>{{ settings.sms.maxSmsCount }}</b>
+      </ion-label>
+      <ion-range step="1" min="1" max="4" pin="true" snaps="true" (ngModelChange)="settingsChanged()" [(ngModel)]="settings.sms.maxSmsCount">
+        <ion-label range-left>1</ion-label>
+        <ion-label range-right>4</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-item-group>
+</ion-content>

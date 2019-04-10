@@ -1,0 +1,27 @@
+<ion-menu [content]="content" swipeEnabled="false" persist="false">
+
+    <ion-header>
+        <ion-toolbar>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="arrow-back"></ion-icon> 
+            </button>
+            <ion-title>
+                Menu
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <button *ngFor="let page of pages"
+            [color]="currentPage == page.component ? 'primary' : 'default'"
+            ion-item (click)="openPage(page)">
+                <ion-icon name="{{page.icon}}" item-start></ion-icon>
+                {{page.title}}
+            </button>
+        </ion-list>
+    </ion-content>
+
+</ion-menu>
+
+<ion-nav #nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

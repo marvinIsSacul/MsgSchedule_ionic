@@ -1,0 +1,20 @@
+<ion-list>
+  <ion-list-header>
+    Schedule Options
+  </ion-list-header>
+
+  <button ion-item (click)="close('refresh-messages')">
+    <ion-icon icon-only item-start name="refresh"></ion-icon>
+    Refresh Messages
+  </button>
+
+  <button ion-item (click)="close('create-new-message')">
+    <ion-icon icon-only item-start name="create"></ion-icon>
+    Create New Message
+  </button>
+
+  <button [disabled]="!messages || messages.length <= 0" ion-item (click)="close('clear-all-messages')">
+    <ion-icon icon-only item-start name="trash"></ion-icon>
+    Clear All Messages
+  </button>
+</ion-list>
